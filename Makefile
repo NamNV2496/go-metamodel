@@ -26,3 +26,11 @@ clean:
 	$(GO) clean -cache
 	rm -f $(BINARY) coverage.out coverage.html
 
+lint:
+	@if command -v golangci-lint >/dev/null 2>&1; then \
+		echo "go lint is running..."; \
+		golangci-lint run ./...; \
+	else \
+		echo "golangci-lint not found. Run 'make install-tools' first$(COLOR_RESET)"; \
+		exit 1; \
+	fi

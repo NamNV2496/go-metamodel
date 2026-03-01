@@ -6,6 +6,7 @@ import (
 	"go/ast"
 	"go/parser"
 	"go/token"
+	"maps"
 	"os"
 	"path/filepath"
 	"reflect"
@@ -193,9 +194,7 @@ func (r *pkgResolver) resolveExternalStruct(pkgAlias, typeName string) (map[stri
 		if err != nil {
 			continue
 		}
-		for name, st := range collectStructTypes(fileNode) {
-			structTypes[name] = st
-		}
+		maps.Copy(structTypes, collectStructTypes(fileNode))
 	}
 
 	r.cache[importPath] = structTypes
@@ -281,14 +280,14 @@ func parseTagName(structTag reflect.StructTag, tagKey string) string {
 func parseGormTagName(structTag reflect.StructTag, tag string) string {
 	for _, part := range strings.Split(tag, ";") {
 		part = strings.TrimSpace(part)
-		if strings.HasPrefix(part, "column:") {
-			return strings.TrimPrefix(part, "column:")
+		if after, ok := strings.CutPrefix(part, "column:"); ok {
+			return after
 		}
-		if strings.HasPrefix(part, "many2many:") {
-			return strings.TrimPrefix(part, "many2many:")
+		if after, ok := strings.CutPrefix(part, "many2many:"); ok {
+			return after
 		}
-		if strings.HasPrefix(part, "one2many:") {
-			return strings.TrimPrefix(part, "one2many:")
+		if after, ok := strings.CutPrefix(part, "one2many:"); ok {
+			return after
 		}
 		// retry with json for id primary key
 		rawTag := structTag.Get("json")
