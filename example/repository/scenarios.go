@@ -1,6 +1,7 @@
 package repository
 
-//go:generate metamodel -source=scenarios.go -destination=../generated/ -tag=bson -packageName=metamodel -tableName=scenarios
+// another package name
+//go:generate metamodel -source=scenarios.go -destination=../generated/ -tag=bson -packageName=metamodel_ -tableName=scenarios
 
 type Scenarios struct {
 	FeatureName string `json:"feature_name,omitempty"`

@@ -11,17 +11,17 @@ SELECT * FROM "gorm_tests" WHERE "id" = xxx AND "name" = 'yyy'
 
 The code can be much cleaner
 ```go
-db.Table(metamodel_.GormTest_.TableName).
+db.Table(repository.GormTest_.TableName).
 	Select(
-		metamodel_.GormTest_.Id.WithDefaultOwner().String(),
-		metamodel_.GormTest_.IsActive.WithDefaultOwner().String(),
-		metamodel_.Feature_.FeatureName.WithOwner("custom_name").String(),
-		metamodel_.GormTest_.PriceUnit.String(),
-		metamodel_.GormTest_.Type.String(),
+		repository.GormTest_.Id.WithDefaultOwner().String(),
+		repository.GormTest_.IsActive.WithDefaultOwner().String(),
+		repository.Feature_.FeatureName.WithOwner(repository.Feature_.FeatureName.TableName).String(),
+		repository.GormTest_.PriceUnit.String(),
+		repository.GormTest_.Type.String(),
 	).
-	Where(metamodel_.GormTest_.IsActive.IsTrueString()).
-	Where(metamodel_.GormTest_.FeatureName.EqualString("test")).
-	Order(metamodel_.GormTest_.Id.AscString()).
+	Where(repository.GormTest_.IsActive.IsTrueString()).
+	Where(repository.GormTest_.FeatureName.EqualString("test")).
+	Order(repository.GormTest_.Id.AscString()).
 	Find(&results)
 
 // instead of

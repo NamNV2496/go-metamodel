@@ -4,7 +4,7 @@ import (
 	"github.com/namnv2496/exmaple/entity"
 )
 
-//go:generate metamodel -source=$GOFILE -destination=../generated/ -tag=gorm -packageName=metamodel -tableName=gorm_tests
+//go:generate metamodel -source=$GOFILE -destination=./ -tag=gorm -packageName=repository -tableName=gorm_tests
 type GormTest struct {
 	entity.Entity  `gorm:"embedded"`
 	FeatureName    string            `gorm:"column:feature_name;not null"`

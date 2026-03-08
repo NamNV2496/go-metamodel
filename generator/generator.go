@@ -58,7 +58,7 @@ func Generate(cfg Config) error {
 		return fmt.Errorf("no structs found in %s", cfg.Source)
 	}
 	if cfg.PackageName != "" {
-		pkgName = cfg.PackageName + "_"
+		pkgName = cfg.PackageName
 	}
 	destPath := cfg.Destination
 	if destPath == "" {
