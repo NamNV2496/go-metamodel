@@ -115,8 +115,8 @@ type Order struct {
 	}
 	// "-" tagged field must be excluded
 	want := []FieldMeta{
-		{FieldName: "ID", TagName: "order_id"},
-		{FieldName: "Status", TagName: "status"},
+		{FieldName: "ID", TagName: "order_id", DataType: "int"},
+		{FieldName: "Status", TagName: "status", DataType: "string"},
 	}
 	if !reflect.DeepEqual(s.Fields, want) {
 		t.Errorf("Fields = %+v, want %+v", s.Fields, want)
@@ -143,9 +143,9 @@ type Item struct {
 		t.Fatalf("got %d structs, want 1", len(structs))
 	}
 	want := []FieldMeta{
-		{FieldName: "ID", TagName: "id"},
-		{FieldName: "Name", TagName: "item_name"},
-		{FieldName: "Price", TagName: "price"},
+		{FieldName: "ID", TagName: "id", DataType: "uint"},
+		{FieldName: "Name", TagName: "item_name", DataType: "string"},
+		{FieldName: "Price", TagName: "price", DataType: "float64"},
 	}
 	if !reflect.DeepEqual(structs[0].Fields, want) {
 		t.Errorf("Fields = %+v, want %+v", structs[0].Fields, want)

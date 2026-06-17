@@ -11,7 +11,7 @@ var Feature_ = struct {
 	Description Field
 }{
 	TableName:   "features",
-	FeatureName: Field{FieldName: "feature_name", TableName: "features"},
-	ScenarioID:  Field{FieldName: "scenario_id", TableName: "features"},
-	Description: Field{FieldName: "description", TableName: "features"},
+	FeatureName: Field{FieldName: "feature_name", TableName: "features", DataType: "string"},
+	ScenarioID:  Field{FieldName: "scenario_id", TableName: "features", DataType: "int"},
+	Description: Field{FieldName: "description", TableName: "features", DataType: "string"},
 }

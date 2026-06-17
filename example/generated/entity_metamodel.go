@@ -11,7 +11,7 @@ var Entity_ = struct {
 	UpdatedAt Field
 }{
 	TableName: "entitys",
-	Id:        Field{FieldName: "id", TableName: "entitys"},
-	CreatedAt: Field{FieldName: "created_at", TableName: "entitys"},
-	UpdatedAt: Field{FieldName: "updated_at", TableName: "entitys"},
+	Id:        Field{FieldName: "id", TableName: "entitys", DataType: "uint"},
+	CreatedAt: Field{FieldName: "created_at", TableName: "entitys", DataType: "time.Time"},
+	UpdatedAt: Field{FieldName: "updated_at", TableName: "entitys", DataType: "time.Time"},
 }

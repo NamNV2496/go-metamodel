@@ -223,10 +223,12 @@ func parseFields(structType *ast.StructType, tag string, structTypes map[string]
 		if tagName == "" || tagName == "-" || tagName == "->" {
 			continue
 		}
+		dataType := goTypeString(field.Type)
 		for _, ident := range field.Names {
 			fields = append(fields, FieldMeta{
 				FieldName: ident.Name,
 				TagName:   tagName,
+				DataType:  dataType,
 			})
 		}
 	}
@@ -275,6 +277,25 @@ func parseTagName(structTag reflect.StructTag, tagKey string) string {
 		return strings.TrimSpace(parts[0])
 	}
 	return tag
+}
+
+// goTypeString returns a string representation of an AST type expression.
+func goTypeString(expr ast.Expr) string {
+	switch t := expr.(type) {
+	case *ast.Ident:
+		return t.Name
+	case *ast.StarExpr:
+		return "*" + goTypeString(t.X)
+	case *ast.SelectorExpr:
+		if pkg, ok := t.X.(*ast.Ident); ok {
+			return pkg.Name + "." + t.Sel.Name
+		}
+	case *ast.ArrayType:
+		return "[]" + goTypeString(t.Elt)
+	case *ast.MapType:
+		return "map[" + goTypeString(t.Key) + "]" + goTypeString(t.Value)
+	}
+	return "any"
 }
 
 func parseGormTagName(structTag reflect.StructTag, tag string) string {

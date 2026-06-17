@@ -30,6 +30,7 @@ type StructMeta struct {
 type FieldMeta struct {
 	FieldName string
 	TagName   string
+	DataType  string
 }
 
 func toSnakeCase(s string) string {
@@ -119,11 +120,15 @@ func Generate(cfg Config) error {
 	if err := generateCommonFile(pkgName, destDir); err != nil {
 		return fmt.Errorf("failed to write common file: %w", err)
 	}
-	if err := generateOperatorFile(pkgName, destDir); err != nil {
-		return fmt.Errorf("failed to write gorm field file: %w", err)
+	if sourceHasTag(cfg.Source, "gorm") {
+		if err := generateOperatorFile(pkgName, destDir); err != nil {
+			return fmt.Errorf("failed to write gorm field file: %w", err)
+		}
 	}
-	if err := generateMongoOperatorFile(pkgName, destDir); err != nil {
-		return fmt.Errorf("failed to write mongo operator file: %w", err)
+	if sourceHasTag(cfg.Source, "bson") {
+		if err := generateMongoOperatorFile(pkgName, destDir); err != nil {
+			return fmt.Errorf("failed to write mongo operator file: %w", err)
+		}
 	}
 	return nil
 }

@@ -11,9 +11,9 @@ var Scenarios_ = struct {
 	Description Field
 }{
 	TableName:   "scenarioss",
-	FeatureName: Field{FieldName: "feature_name", TableName: "scenarioss"},
-	ScenarioID:  Field{FieldName: "scenario_id", TableName: "scenarioss"},
-	Description: Field{FieldName: "description", TableName: "scenarioss"},
+	FeatureName: Field{FieldName: "feature_name", TableName: "scenarioss", DataType: "string"},
+	ScenarioID:  Field{FieldName: "scenario_id", TableName: "scenarioss", DataType: "int"},
+	Description: Field{FieldName: "description", TableName: "scenarioss", DataType: "string"},
 }
 
 // AnotherModel_ contains field name constants for AnotherModel
@@ -22,5 +22,5 @@ var AnotherModel_ = struct {
 	UserID    Field
 }{
 	TableName: "another_models",
-	UserID:    Field{FieldName: "user_id", TableName: "another_models"},
+	UserID:    Field{FieldName: "user_id", TableName: "another_models", DataType: "string"},
 }
