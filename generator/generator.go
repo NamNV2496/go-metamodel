@@ -119,14 +119,25 @@ func Generate(cfg Config) error {
 	if err := generateCommonFile(pkgName, destDir); err != nil {
 		return fmt.Errorf("failed to write common file: %w", err)
 	}
-	// When tag is gorm, also generate the shared Field type file
-	if err := generateOperatorFile(pkgName, destDir); err != nil {
-		return fmt.Errorf("failed to write gorm field file: %w", err)
+	if sourceHasTag(cfg.Source, "gorm") {
+		if err := generateOperatorFile(pkgName, destDir); err != nil {
+			return fmt.Errorf("failed to write gorm field file: %w", err)
+		}
 	}
-	if err := generateMongoOperatorFile(pkgName, destDir); err != nil {
-		return fmt.Errorf("failed to write mongo operator file: %w", err)
+	if sourceHasTag(cfg.Source, "bson") {
+		if err := generateMongoOperatorFile(pkgName, destDir); err != nil {
+			return fmt.Errorf("failed to write mongo operator file: %w", err)
+		}
 	}
 	return nil
+}
+
+func sourceHasTag(filename, tagKey string) bool {
+	content, err := os.ReadFile(filename)
+	if err != nil {
+		return false
+	}
+	return bytes.Contains(content, []byte(tagKey+`:"`))
 }
 
 func generateCommonFile(pkgName, destDir string) error {

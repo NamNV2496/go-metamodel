@@ -11,8 +11,8 @@ import (
 func main() {
 	// Use the generated metamodel constants
 	fmt.Println("Scenarios.TableName: ", metamodel_.Scenarios_.TableName)
-	fmt.Println("Scenarios.Status: ", metamodel_.Scenarios_.Status)
-	fmt.Println("AnotherModel.UserName: ", metamodel_.AnotherModel_.UserName)
+	fmt.Println("Scenarios.ScenarioID: ", metamodel_.Scenarios_.ScenarioID)
+	fmt.Println("AnotherModel.UserID: ", metamodel_.AnotherModel_.UserID)
 
 	fmt.Println("Feature.ScenarioID: ", repository.Feature_.ScenarioID)
 	// build gorm query
@@ -26,7 +26,7 @@ func main() {
 
 	fmt.Println(repository.Join("table", repository.GormTest_.FeatureName.EqualString("1")))
 	fmt.Println("select " + metamodel_.Columns(
-		metamodel_.Scenarios_.Status.String(),
+		metamodel_.Scenarios_.ScenarioID.String(),
 		metamodel_.Scenarios_.Description.String(),
 	))
 
